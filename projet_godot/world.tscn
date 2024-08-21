@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://dq72fbooktbq6"]
+
+[ext_resource type="Script" path="res://character_body_3d.gd" id="1_shw5k"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0i42b"]
+size = Vector3(22.2084, 0.001, 16.5359)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_e7bjy"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_wybsm"]
+sky_material = SubResource("ProceduralSkyMaterial_e7bjy")
+
+[sub_resource type="Environment" id="Environment_cmbky"]
+background_mode = 2
+sky = SubResource("Sky_wybsm")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ygg5o"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_crpnb"]
+
+[node name="world" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.350196, -0.975766, 0.450205)
+shape = SubResource("BoxShape3D_0i42b")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+shadow_enabled = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_cmbky")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.348751, -0.949108, 0.4481)
+size = Vector3(22.1539, 0.001, 16.8523)
+
+[node name="player" type="CharacterBody3D" parent="."]
+script = ExtResource("1_shw5k")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0150574, 0)
+mesh = SubResource("CapsuleMesh_ygg5o")
+
+[node name="head" type="Node3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.27759, 0)
+
+[node name="Camera3D" type="Camera3D" parent="player/head"]
+transform = Transform3D(1, 0, 0, 0, 0.989478, 0.144684, 0, -0.144684, 0.989478, 0, -0.109523, 0.0265779)
+fov = 96.345
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="player"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.525879, 0)
+shape = SubResource("CapsuleShape3D_crpnb")
